@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Incident",
+  "type": "object",
+  "required": ["incident_id", "created_at", "stage", "raw_event"],
+  "properties": {
+    "incident_id": {"type": "string", "example": "INC-3fa91c2e"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "stage": {"enum": ["ingested","monitored","detected","investigated","planned","executed","reported"]},
+    "raw_event": {"type": "object", "description": "normalized log: timestamp, src_ip, dst_host, service, ..."},
+    "is_anomaly": {"type": "boolean"},
+    "threat_type": {"enum": ["brute_force","port_scan","web_attack","benign","unknown"]},
+    "severity": {"enum": ["low","medium","high","critical"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "mitre_techniques": {"type": "array", "items": {"type": "string"}},
+    "attack_timeline": {"type": "array", "items": {"type": "object"}},
+    "recommended_action": {
+      "type": "object",
+      "properties": {
+        "type": {"enum": ["monitor_only","block_ip","rate_limit","isolate_host"]},
+        "target": {"type": "string"},
+        "requires_approval": {"type": "boolean"},
+        "reason": {"type": "string"}
+      }
+    },
+    "approval_status": {"enum": ["not_required","pending","approved","rejected"]},
+    "execution_result": {"type": "object"},
+    "summary": {"type": "string"},
+    "audit": {"type": "array", "items": {"type": "object", "properties": {
+      "time": {"type": "string"}, "agent": {"type": "string"}, "message": {"type": "string"}}}}
+  }
+}

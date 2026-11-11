@@ -1,0 +1,8 @@
+# Skeleton runs with the standard library only (python run_demo.py).
+# Install these when you are ready for the API / LangGraph step:
+fastapi
+uvicorn
+langgraph
+langchain
+scikit-learn
+pandas
